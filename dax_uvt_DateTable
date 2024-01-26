@@ -1,0 +1,28 @@
+Dates = 
+VAR BaseCalendar = CALENDARAUTO(12)
+RETURN
+    GENERATE(
+        BaseCalendar,
+        VAR BaseDate = [Date]
+        VAR YearDate = YEAR(BaseDate)
+        VAR MonthNumber = MONTH(BaseDate)
+        VAR QuarterDate = QUARTER(BaseDate)
+        VAR TodayDate = TODAY()
+        VAR TodayYear = YEAR(TodayDate)
+        VAR TodayMonthNo = MONTH(TodayDate)
+        VAR TodayQuarter = QUARTER(TodayDate)
+        RETURN ROW (
+            "Day", FORMAT( BaseDate, "mm/dd/yy"),
+            "Year", YearDate,
+            "Month Number", MonthNumber,
+            "Month", FORMAT( BaseDate, "MMMM" ),
+            "Month Year", FORMAT( BaseDate, "MMMM YYYY" ),
+            "Quarter", FORMAT( QuarterDate, "\QQ"),
+            "Quarter Year", FORMAT(BaseDate, "\QQ yyyy"),
+            "Today", FORMAT( TodayDate, "mm/dd/yy"),
+            "Today Year", TodayYear,
+            "Today Month No", TodayMonthNo,
+            "Today Month", FORMAT( TodayDate, "MMMM"),
+            "Today Year Month", FORMAT( TodayDate, "MMMM YYYY")
+        )
+    )
