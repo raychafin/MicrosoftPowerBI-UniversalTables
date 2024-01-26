@@ -1,0 +1,25 @@
+let
+// Start Date pulling from parameter set after confirming earliest date in all tables.
+StartDate = StartingDate,
+EndDate = Today,
+Today = Date.EndOfYear(DateTime.Date(DateTime.LocalNow())),
+Duration = Duration.Days(Duration.From(Today-StartDate))+1,
+// Date Columns
+Dates = List.Dates(StartDate, Duration, #duration(1, 0, 0, 0)),
+#"Converted to Table" = Table.FromList(Dates, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+#"Renamed Columns" = Table.RenameColumns(#"Converted to Table", {{"Column1", "Date"}}),
+#"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns", {{"Date", type date}}),
+#"Inserted Year" = Table.AddColumn(#"Changed Type", "Year", each Date.Year([Date]), Int64.Type),
+#"Inserted Quarter" = Table.AddColumn(#"Inserted Year", "Quarter#", each Date.QuarterOfYear([Date]), Int64.Type),
+#"Format Quarter" = Table.AddColumn(#"Inserted Quarter", "Quarter", each "Q" & Text.From([#"Quarter#"])),
+#"Inserted Month" = Table.AddColumn(#"Format Quarter", "Month#", each Date.Month([Date]), Int64.Type),
+#"Format Month" = Table.AddColumn(#"Inserted Month", "Month Name", each Text.Start(Date.MonthName([Date]),3), type text),
+#"Inserted Week of Year" = Table.AddColumn(#"Format Month", "Week of Year", each Date.WeekOfYear([Date]), Int64.Type),
+#"Format Month Year" = Table.AddColumn(#"Inserted Week of Year", "MonthYear", each Date.ToText([Date],"MMM") & "-" & Text.From(Date.Year([Date]))),
+#"Duplicated column" = Table.DuplicateColumn(#"Format Month Year", "Date", "Day"),
+#"Extracted day" = Table.TransformColumns(#"Duplicated column", {{"Day", each Date.Day(_), type nullable number}}),
+#"Create DateKey" = Table.TransformColumnTypes(Table.AddColumn(#"Extracted day", "DateKey", each Text.From([Year]) & Text.From([#"Month#"]) & Text.From([Day])), {{"DateKey", Int64.Type}}),
+#"Format Quarter Year" = Table.AddColumn(#"Create DateKey", "QuarterYear", each "Q"&Text.From([#"Quarter#"]) & "-" & Text.From(Date.Year([Date]))),
+#"Create Month Year Key" = Table.TransformColumnTypes(Table.AddColumn(#"Format Quarter Year", "Year Month Number", each Text.From([Year]) & Text.From([#"Month#"])), {{"Year Month Number", Int64.Type}})
+in
+#"Create Month Year Key"
