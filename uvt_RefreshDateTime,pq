@@ -1,0 +1,11 @@
+let
+  UTC_DateTimeZone = DateTimeZone.UtcNow(),
+  UTC_Date = Date.From(UTC_DateTimeZone),
+  StartOfSummerTime = Date.StartOfWeek( #date( Date.Year( UTC_Date ), 3, 31 ), Day.Sunday ),
+  StartOfWinterTime = Date.StartOfWeek( #date( Date.Year( UTC_Date ), 10, 31 ), Day.Sunday ),
+  Offset = if UTC_Date >= StartOfSummerTime and UTC_Date <= StartOfWinterTime then -5 else -6,
+  CST_DateTimeZone = DateTimeZone.SwitchZone(UTC_DateTimeZone, Offset),
+  #"Convert to table" = Table.FromValue(CST_DateTimeZone),
+    #"Renamed Columns" = Table.RenameColumns(#"Convert to table",{{"Value", "Refresh DateTime"}})
+in
+  #"Renamed Columns"
