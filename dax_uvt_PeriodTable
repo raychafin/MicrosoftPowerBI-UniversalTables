@@ -1,0 +1,33 @@
+Time Periods = 
+VAR _today =
+    MAX( 'FactJobs'[Ending_Date] )
+VAR _thisyear = 
+    YEAR( _today )
+VAR _thismonth =
+    MONTH( _today )
+VAR _thisday =
+    DAY( _today )
+RETURN
+    SELECTCOLUMNS(
+        UNION(
+            //Yesterday
+            ADDCOLUMNS(
+                GENERATE(
+                    SELECTCOLUMNS( { "Yesterday" }, "Period", [Value] ),
+                    GENERATESERIES( DATE( _thisyear, _thismonth, _thisday -1 ), _today -1 )
+                ),
+                "Axis Date", [Value]
+            ),
+            //LastMonth
+            ADDCOLUMNS(
+                GENERATE(
+                    SELECTCOLUMNS( {"Last Month" }, "Period", [Value] ),
+                    GENERATESERIES( DATE( _thisyear, _thismonth -1, 1 ), EOMONTH(_today,-1 ) )
+                ),
+                "Axis Date",[Value]
+            )
+        ),
+        "Date", [Value],
+        "Period", [Period],
+        "Axis Date", [Axis Date]
+    )
