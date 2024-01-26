@@ -1,0 +1,15 @@
+AboveAvg =
+VAR Sales = [Total Sales]
+VAR AvgSalesOverall =
+AVERAGEX(
+  ALLEXCEPT(dimDate, dimDate[Date], dimDate[Day], dimDate[Month], dimDate[MonthNo]),
+  CALCULATE([Total Sales])
+)
+VAR Result =
+IF(
+  Sales>AvgSalesOverall,
+  1,
+  0
+)
+RETURN
+  Result
