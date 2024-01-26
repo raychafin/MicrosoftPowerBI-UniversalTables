@@ -1,0 +1,9 @@
+let
+  MaxRate = 200,
+  MinRate = 50,
+  Rate = List.Numbers(MinRate, MaxRate, .5),
+  #"Converted to Table" = Table.FromList(Rate, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+  #"Renamed Columns" = Table.RenameColumns(#"Converted to Table", {{"Column1", "labor_rate"}}),
+  #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns", {{"labor_rate", type number}})
+in
+  #"Changed Type"
