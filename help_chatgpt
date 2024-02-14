@@ -1,0 +1,88 @@
+Prompts: 
+
+ 
+
+"Building a data model" 
+I manage a {data services} firm. 
+
+-Generate a data model for this company 
+
+-Prefix the Fact tables with FCT_ and the Dimension tables with DIM_ 
+
+-List the relationships between the tables in a matrix format 
+
+ 
+
+"Generate CSV Files" 
+
+Generate sample CSV files for each of these tables. Assume the following: 
+
+-Dates range from 2019 to end of 2023 
+
+-There was growth in 2019, a poor year in 2021, and a big recovery in 2022. 
+
+-50 employees with random realistic American names 
+
+-30 customers with fictitious corporate like names 
+
+ 
+
+Additional – generate in Python code version* 
+
+Generate a Python script with generates the CSV files for every table in the model and save them on c:\Consultancy Project\ 
+
+ 
+
+Additional – generate in T-SQL version* 
+
+Generate a T-SQL script that generates the same output tables in a SQL server database 
+
+*then* 
+
+I need now the complete data generation script aside. 
+
+ 
+
+"Date table in Power Query" 
+
+Generate a Dim_Date table in Power Query. 
+
+Add a column to mark if it's an English Holiday. 
+
+Add a column to mark if it's a working day (non-weekend and non-holiday) 
+
+Add a column with the number of working days year to date 
+
+ 
+
+"Generating CSS code for SVG visuals" 
+
+Create a DAX Measure to return an SVG image with a button –like appearance and displays the text "Not Ok" on it. The SVG is defined to have a rectangular red button with rounded corners, and the text is centered on the button in white. 
+
+*need to add in adjust this measure to display "OK" in Green if the value of column Table[Number]>=5 or "Not Ok" in red if the value is <5 
+
+It needed to be max(Table[Number]) 
+
+ 
+
+Provide a DAX measure for Power BI that embeds an image from a column and scales it to twice its size using CSS within a DAX measure referencing SELECTEDVALUE( blah blah ) 
+
+ 
+
+ 
+
+"Generate Report Imaging" 
+
+Unicode Character Symbols vertex42.com 
+
+Generate some modern slim designs 1000x200 px for a data services banner. 
+
+ 
+
+"Generate Tabular Editor Scripts" 
+
+Generate C# code for Tabular Editor to create measures from columns. 
+
+*after 
+
+Tabular Object Model (TOM) scripting language within the Advanced Scripting feature of Tabular Editor 
