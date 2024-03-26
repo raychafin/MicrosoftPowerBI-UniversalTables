@@ -1,33 +1,14 @@
-1. FIRST CREATE NEW QUERY—>ADVANCED EDITOR—>
-    
-    `(`
-    
-    `PeriodName as text,`
-    
-    `StartDate as date,`
-    
-    `EndDate as date,`
-    
-    `SortOrder as number`
-    
-    `) as table =>`
-    
-    `let`
-    
-    `DayCount = Duration.Days(EndDate-StartDate)+1,`
-    
-    `DateList = List.Dates(StartDate,DayCount,#duration(1,0,0,0)),`
-    
-    `AddPeriodName = List.Transform(DateList,`
-    
-    `each {PeriodName,_,SortOrder}),`
-    
-    `CreateTable = #table(`
-    
-    `type table[Period=text, Date=date, Sort=number],`
-    
-    `AddPeriodName)`
-    
-    `in`
-    
-    `CreateTable`
+(PeriodName as text,
+StartDate as date,
+EndDate as date,
+SortOrder as number) as table =>
+let
+  DayCount = Duration.Days(EndDate-StartDate)+1,
+  DateList = List.Dates(StartDate,DayCount,#duration(1,0,0,0)),
+  AddPeriodName = List.Transform(DateList,
+  each {PeriodName,_,SortOrder}),
+  CreateTable = #table(
+  type table[Period=text, Date=date, Sort=number],
+  AddPeriodName)
+in
+  CreateTable
